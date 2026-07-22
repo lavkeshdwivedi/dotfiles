@@ -46,7 +46,6 @@ Both scripts copy all skills to `~/.claude/commands/` (or `%USERPROFILE%\.claude
 | [openclaw](https://github.com/lavkeshdwivedi/openclaw) | Personal AI assistant, cross-platform |
 | [career-ops-fork](https://github.com/lavkeshdwivedi/career-ops-fork) | AI-powered job search system built on Claude Code: 14 skill modes, Go dashboard, PDF generation, batch processing |
 | [planning-poker](https://github.com/lavkeshdwivedi/planning-poker) | Real-time Planning Poker for agile teams; single HTML file, Firebase backend, no build step |
-| [theSpaceDB](https://github.com/lavkeshdwivedi/theSpaceDB) | Self-evolving cognitive database: blocks in free space, distance-based clustering, emergent structure |
 | [awesome-design-md](https://github.com/lavkeshdwivedi/awesome-design-md) | DESIGN.md files capturing design systems from popular sites, for use with coding agents |
 | [skills](https://github.com/lavkeshdwivedi/skills) | Claude Code skill collection |
 | [dotfiles](https://github.com/lavkeshdwivedi/dotfiles) | This repo |
