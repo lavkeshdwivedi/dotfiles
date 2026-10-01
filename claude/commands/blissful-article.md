@@ -37,5 +37,20 @@ Also confirm zero em dashes and that the last paragraph does not match the gener
 
 ## 5. LinkedIn newsletter
 
-- Use `python scripts/crosspost_linkedin_newsletter.py --slug <slug> --dry-run` first, then without `--dry-run`. It records the post in `data/crosspost-history.json`; commit that file afterwards.
-- WARNING: the script runs `taskkill /f /im msedge.exe` to relaunch Edge with remote debugging on the user's profile. Check `tasklist` for msedge and get the user's OK before the real run, because it closes every open Edge window.
+Do not use the repo's crosspost scripts (`crosspost_linkedin_newsletter.py` and friends). The user considers them unreliable, they post without a cover, and they `taskkill` every Edge window. Publish by hand through Claude in Chrome instead. The newsletter (https://www.linkedin.com/newsletters/blissful-bytes-7173171984510468097/) gets more reach than a feed post, so every edition needs a proper cover.
+
+### Cover image (house style, looks hand-made, not AI art)
+
+- Editorial typographic card, 1280x720: cream background `#f1ece3`, "Blissful Bytes" top left and a short label top right (for example "Career notes", "A note to readers") in Inter, a big Instrument Serif headline (about 130px) with one key word in italics, a 2-line italic serif subtitle in muted brown, a thin rule, then `lavkesh.com` bottom left and categories bottom right.
+- The headline is a punchy restatement, not the full title (for example "Still a software *engineer.*").
+- Build it as HTML with Google Fonts, render with Playwright `chromium.launch(channel="msedge", headless=True)` (a separate headless instance, the user's Edge stays untouched), screenshot the card at `device_scale_factor=1.5`, then save a 1280x720 JPEG at quality ~82 (about 55 KB). Look at the PNG before using it.
+
+### Publish in Chrome
+
+1. Open https://www.linkedin.com/article/new/ and confirm the author selector already shows "Blissful Bytes".
+2. Cover: the file input only exists after "Upload from computer" is clicked, and clicking opens a native picker. First patch `HTMLInputElement.prototype.click` in the page to capture file inputs without opening the dialog, click the button from JS, find the input ref, then `file_upload` the JPEG. Click Next in the cover dialog.
+3. Title: set the Title textarea with the native value setter plus `input` and `change` events. Never type long text with keystrokes: it freezes the editor and interleaves garbage into the title.
+4. Body: select the "Article editor content" contenteditable and run `document.execCommand('insertHTML', false, html)` once, with one `<p>` per paragraph and a final `Also on lavkesh.com: <link>` paragraph.
+5. Wait for autosave, reload the draft URL (`/article/edit/<id>/`), and verify title, paragraph count, no em dashes, and cover present.
+6. Click Next from JS. In the publish dialog, insert a 2 to 3 sentence intro in the user's voice (`execCommand('insertText')` into the dialog's contenteditable), check it posts to "Anyone + Subscribers", then click Publish.
+7. Confirm the edition shows "Published Just now" with the cover at the top of the newsletter page.
