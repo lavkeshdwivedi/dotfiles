@@ -1,4 +1,4 @@
-Keep Lavkesh's professional profile consistent everywhere it appears: the tailored resume, LinkedIn, lavkesh.com, the GitHub profile README, and the GitLab profile. Use this whenever any one of them changes (new role, new cloud, new title, new dates) or when asked to tailor a resume for a posting.
+Keep Lavkesh's professional profile consistent everywhere it appears: the tailored resume, LinkedIn, lavkesh.com, the GitHub profile README, the GitLab profile, and the job boards (Indeed, Dice, Monster). Use this whenever any one of them changes (new role, new cloud, new title, new dates) or when asked to tailor a resume for a posting.
 
 ## Sources of truth
 
@@ -6,6 +6,7 @@ Keep Lavkesh's professional profile consistent everywhere it appears: the tailor
 - **LinkedIn:** linkedin.com/in/lavkesh (headline, About, Experience, top skills).
 - **Site:** repo `C:\Claude\Projects\lavkesh` (lavkeshdwivedi/lavkesh). Profile text lives in `index.html` (title, meta/OG/Twitter descriptions, JSON-LD `jobTitle` and description, About bio) and the persona line in `scripts/voice.py`. Articles are never edited for profile changes (timeline rule).
 - **GitHub and GitLab:** repo `C:\Claude\Projects\profile-readme` has two remotes, `origin` (GitHub) and `gitlab`. One README change covers both. Account bios: GitHub via `gh api -X PATCH user -f bio=...`; GitLab bio, job title, and organization only through gitlab.com/-/user_settings/profile (the API `PUT /user` returns 404 for non-admins).
+- **Job boards:** Indeed (profile.indeed.com: uploaded resume, structured Indeed Resume, Preferences), Dice (dice.com/profile: Profile, Skills, Work History, Preferences), Monster (monster.com/profile/detail). Each carries the current tailored resume plus a structured copy of summary and work history that must match it.
 
 ## Current career facts (update this list when they change)
 
@@ -42,6 +43,17 @@ Keep Lavkesh's professional profile consistent everywhere it appears: the tailor
 - LinkedIn About names no clients or employers at all: "a major US brokerage", "a large enterprise software company", "a global healthcare technology company", "CRM platforms" (no Dynamics 365). Client names stay in Experience and on the resume, where recruiters filter by past company.
 - After any scripted `execCommand` edit in a LinkedIn editor, press a real key in the field (End, space, Backspace) and check the character counter changed before saving; otherwise the save can silently drop the edit. Always reload and re-read after saving.
 - Respect fields the user cleared on purpose (employment type and location are unset on client roles).
+
+## Job boards checklist (Claude in Chrome)
+
+- Upload the latest tailored resume and remove or replace the old one, so only one resume is listed. Chrome `file_upload` only accepts files in this session's job tmp folder (or a folder added with /add-dir), so copy the file there first. To avoid the native file picker, patch `HTMLInputElement.prototype.click` and `showPicker` for file inputs before clicking an upload or replace button, then use `file_upload` on the input.
+- Structured profile must match the resume: summary (same text, ending with the C2C line), headline or title (Forward Deployed Engineer), every role with title, client, dates, and resume bullets. No CloudTern, and no vendor names (Accionlabs, Cognizant) in titles or companies.
+- Preferences: contract only (Dice: Contract - Corp-to-Corp only; never W2, contract-to-hire, or full-time), Remote + Hybrid, not willing to relocate, Forward Deployed Engineer as a job title.
+- No visa hook: never show H1 or visa status, so recruiters do not pitch W2 or visa transfers. Dice work authorization = "Prefer not to answer"; Monster work authorization list left empty; Indeed has no such field.
+- Dice: 2 MB upload cap (use the PDF export). "Scan and upload" adds junk skill chips (Typing, Drafting, AWS Secrets Manager); prune them before "Add to profile". Preference chips need real clicks, not JS clicks.
+- Indeed: one skill per add form; skill deletes done by Claude show "removed / Undo" but do not persist, so leave skill removal to the user. Remote preference has no remote+hybrid option; keep "Open to all jobs".
+- Monster: no Contract job type (use Remote for remote roles). Text fields and the description accept a native value setter plus input/change events; month/year/city/state comboboxes need real typing plus Enter or a click on the suggestion, and city suggestions follow the selected state, so set state first. Skill delete buttons are misaligned with their labels; never script skill deletes there. The cookie banner covers the lower left of the viewport; click options outside it.
+- Reload each site after saving and re-read the fields.
 
 ## Site and README
 
