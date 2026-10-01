@@ -39,6 +39,8 @@ Keep Lavkesh's professional profile consistent everywhere it appears: the tailor
 - Role descriptions max 2,000 characters; About max 2,600. Count before typing.
 - The description and About fields are contenteditable. For a targeted change select the exact text range with JavaScript and use `document.execCommand('insertText', ...)`; plain typing after a JS selection can append instead of replace. Verify by reading the field back after reload.
 - Keep 4 to 6 skills per role. The profile is at the 100 skill cap, so only existing skills can be attached. Keep the 5 About top-skill slots filled (currently Agentic AI Development, Enterprise Architecture, Technical Leadership, GCP, Microsoft Azure).
+- LinkedIn About names no clients or employers at all: "a major US brokerage", "a large enterprise software company", "a global healthcare technology company", "CRM platforms" (no Dynamics 365). Client names stay in Experience and on the resume, where recruiters filter by past company.
+- After any scripted `execCommand` edit in a LinkedIn editor, press a real key in the field (End, space, Backspace) and check the character counter changed before saving; otherwise the save can silently drop the edit. Always reload and re-read after saving.
 - Respect fields the user cleared on purpose (employment type and location are unset on client roles).
 
 ## Site and README
