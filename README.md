@@ -12,6 +12,7 @@ Four custom slash commands that install into `~/.claude/commands/` and are avail
 | `/deep-research` | Comprehensive academic and industry literature research for a paper or topic in the current conversation |
 | `/journal-reviewer` | Full structured peer review (IEEE TSE standard) of a paper in the current conversation |
 | `/style-fix` | Fixes language, voice, and style -- strips AI-sounding patterns, enforces terse writing |
+| `/linkedin-post` | Finds the day's story in his lanes, writes a LinkedIn post in his voice with a contextual image, and posts it once every check passes |
 
 ## Install
 
