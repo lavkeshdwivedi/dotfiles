@@ -8,7 +8,7 @@ His lanes, in priority order: agentic AI and agent frameworks, AI security and g
 
 - Search the last 24 to 48 hours: WebSearch for each lane, plus the feeds in `C:\Claude\Projects\lavkesh\data\sources.yml` (Simon Willison, Anthropic, DeepMind, InfoQ, and the rest).
 - Pick the one story where he has a real, non-obvious take grounded in his work. A big launch everyone is already summarizing is worth less than a sharper story he can add a spine to. If nothing clears that bar, say so and don't post. No post beats a weak post.
-- Skip anything he already posted about. Check his recent activity at https://www.linkedin.com/in/lavkeshdwivedi/recent-activity/all/ and the last week of `C:\Claude\Projects\lavkesh\articles`.
+- Skip anything he already posted about. Check his recent activity at https://www.linkedin.com/in/lavkesh/recent-activity/all/ (not /in/lavkeshdwivedi, which is a different person) and the last week of `C:\Claude\Projects\lavkesh\articles`.
 - Read the primary source, not just the coverage. Note the source URL.
 
 ## 2. Draft in his voice
@@ -42,6 +42,6 @@ Use Claude in Chrome. Don't use the repo's `post_linkedin.py`; the web UI is wha
 3. Text: focus the post editor and run `document.execCommand('insertText', false, text)` once. Never type long text with keystrokes. Check the blank lines between paragraphs survived.
 4. Visibility is Anyone. Click Post.
 5. Add the source URL as the first comment on the post, with one short line of lead-in (for example "Source:" plus the link).
-6. Reload his recent activity and confirm the post is there with the image and the comment. Only then report it as posted, with the post link.
+6. Reload https://www.linkedin.com/in/lavkesh/recent-activity/all/ and confirm the post is there with the image and the comment. Only then report it as posted, with the post link.
 
 If he hasn't authorized posting (a check failed, or he asked for a draft), stop after step 4 and hand him the packet: post text in a plain code block, image path, source link, checklist.
