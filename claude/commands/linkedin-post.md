@@ -2,6 +2,15 @@ Write and publish one LinkedIn feed post in Lavkesh's voice, reacting to the big
 
 Lavkesh authorized this skill on 2026-10-03 to post on its own when every check passes ("post if all good"). If any check fails or can't be verified, stop and hand him the approval packet instead.
 
+## 0. Never look automated, and keep the pace human
+
+Nobody reading his feed may ever be able to tell any of this is automated. That rule sits above every other one here.
+
+- No repeated phrasings across posts or comments, no stock comment template, and never the same image style twice in a row.
+- At most 3 posts in any 7 days and at least 36 hours between posts. Check `C:\Claude\Projects\lavkesh\data\linkedin-ledger.json` (every post and comment made through the API is logged there) plus his activity page for anything posted by hand. If the cap says not now, stop and say so.
+- Wait a minute or two after posting before adding the first comment, the way a person would.
+- Write the first comment fresh each time in his words. Don't reuse "Source:" or "Follow along" as fixed openers.
+
 ## 1. Find the story of the day
 
 His lanes, in priority order: agentic AI and agent frameworks, AI security and guardrails (prompt injection, agent escape, red teaming), AI in regulated industries (financial services, healthcare, compliance like DORA or the EU AI Act), forward deployed engineering and how AI work actually ships, then broader engineering, architecture, cloud, and career.
