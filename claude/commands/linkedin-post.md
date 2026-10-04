@@ -17,11 +17,21 @@ Model the post on his own best posts, not on generic LinkedIn style. Read his la
 
 - First person, fuller paragraphs of three to five sentences, 180 to 300 words. One short punchy line is fine as the close, not as the shape of the whole post.
 - Open with the story and the tension in one or two sentences, explain what actually happened with the concrete details, then say what it means from his own work: his agent escape and guardrail research, kognios, forward deployed delivery in regulated industries. Only tie to things that are true and on record.
-- Take a side. One idea. Plain text, no links in the body, no hashtags, no emojis, no em dashes, no bullet lists.
+- Take a side. One idea. Plain text, no links in the body, no emojis, no em dashes, no bullet lists.
 - Also apply the banned phrases and rough-edges guidance in `POST_RULES` (`C:\Claude\Projects\lavkesh\scriptsoice.py`), but ignore its 60 to 140 word cap and one-sentence paragraphs.
 - Never fabricate anecdotes, numbers, or events. Only facts on record (resume, LinkedIn, the biography in `voice.py`) or from the source. Frame anything else as a general pattern.
 - No employer or client names, no location names.
 - Run `voice.find_banned_phrases(text)` from the lavkesh repo (must be `[]`) and scan for U+2014.
+
+### Write for the people he wants to reach
+
+Every post has to pull in engineers and also the people who hire and buy: recruiters, hiring managers, and senior leaders (CTOs, CIOs, CISOs, heads of AI, risk and compliance leads), especially in regulated industries.
+
+- Explain the technical core in one plain sentence a non-engineer can follow, then go deep.
+- Name the business stake out loud: risk, cost, audit, downtime, a regulator asking questions. Leaders share posts that give them a line to repeat in their own meeting.
+- Show him as the person who ships and leads this work. Show it through what he built, studied, or decided, never by saying he's open to work or asking for roles.
+- End with a question or claim that both a practitioner and an executive can answer from their own seat.
+- Up to three specific hashtags at the very end (for example #AgenticAI #AISecurity #AIGovernance). Specific ones only, never #Hiring, #OpenToWork, or a pile of generic tags.
 
 ## 3. Contextual image
 
