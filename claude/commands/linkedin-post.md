@@ -18,7 +18,7 @@ Model the post on his own best posts, not on generic LinkedIn style. Read his la
 - First person, fuller paragraphs of three to five sentences, 180 to 300 words. One short punchy line is fine as the close, not as the shape of the whole post.
 - Open with the story and the tension in one or two sentences, explain what actually happened with the concrete details, then say what it means from his own work: his agent escape and guardrail research, kognios, forward deployed delivery in regulated industries. Only tie to things that are true and on record.
 - Take a side. One idea. Plain text, no links in the body, no emojis, no em dashes, no bullet lists.
-- Also apply the banned phrases and rough-edges guidance in `POST_RULES` (`C:\Claude\Projects\lavkesh\scriptsoice.py`), but ignore its 60 to 140 word cap and one-sentence paragraphs.
+- Also apply the banned phrases and rough-edges guidance in `POST_RULES` (`C:\Claude\Projects\lavkesh\scripts\voice.py`), but ignore its 60 to 140 word cap and one-sentence paragraphs.
 - Never fabricate anecdotes, numbers, or events. Only facts on record (resume, LinkedIn, the biography in `voice.py`) or from the source. Frame anything else as a general pattern.
 - No employer or client names, no location names.
 - Run `voice.find_banned_phrases(text)` from the lavkesh repo (must be `[]`) and scan for U+2014.
@@ -45,11 +45,11 @@ Make an image that explains the story, and switch the style every post so the fe
 - Incident timeline or postmortem card: for outages and security incidents with timestamps.
 - Editorial typographic card (Blissful Bytes house style from `/blissful-article`): only for pure opinion pieces with nothing to diagram. It's the weakest option.
 
-Rules for every style: the image has to make sense to someone who never reads the post, every number and label on it comes from the source, a bold two-line headline, a small source credit, square 1200x1200. Build it as HTML in `C:\Claude\Projects\scratch\li-<slug>.html` with the local fonts in `scratchonts`, render it with Playwright (`chromium.launch(channel="msedge", headless=True)`), then open the PNG and look at it. Fix overlaps, clipped text, and crowding before using it.
+Rules for every style: the image has to make sense to someone who never reads the post, every number and label on it comes from the source, a bold two-line headline, a small source credit, square 1200x1200. Every image also carries a small LinkedIn-style follow button in a corner (white pill, blue "+ Follow" text, with his name and "agentic AI, AI security, regulated industries" beside it) so people who see a reshare know who to follow. Build it as HTML in `C:\Claude\Projects\scratch\li-<slug>.html` with the local fonts in `scratch\fonts`, render it with Playwright (`chromium.launch(channel="msedge", headless=True)`), then open the PNG and look at it. Fix overlaps, clipped text, and crowding before using it.
 
 ## 4. Human check
 
-Run `/human-check` on the final post, the image, and the source link. Every item must PASS. The source URL must return 200 and say what the post claims.
+Run `/human-check` on the final post, the rendered image, and the source link, every time, before anything goes out. Hand the review to a fresh subagent that sees only the post text, the image file, the source URL, and the human-check checklist, not the drafting. It must check every number and claim in both the text and the image against the source, read the post the way a recruiter and a CTO would, and look at the image for overlaps, clipped text, and unreadable labels. Every item must PASS. Fix and re-run on any FAIL; a CAN'T VERIFY means stop and send Lavkesh the packet instead of posting.
 
 ## 5. Post through Chrome
 
