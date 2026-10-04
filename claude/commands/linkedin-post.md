@@ -1,4 +1,4 @@
-Write and publish one LinkedIn feed post in Lavkesh's voice, reacting to the biggest story of the day in the areas he writes about, with a contextual image from the story itself. Pass a topic or link as the argument to skip discovery; with no argument, find the story.
+Write and publish one LinkedIn feed post in Lavkesh's voice, reacting to the biggest story of the day in the areas he writes about, with a contextual image made for the story. Pass a topic or link as the argument to skip discovery; with no argument, find the story.
 
 Lavkesh authorized this skill on 2026-10-03 to post on its own when every check passes ("post if all good"). If any check fails or can't be verified, stop and hand him the approval packet instead.
 
@@ -13,21 +13,29 @@ His lanes, in priority order: agentic AI and agent frameworks, AI security and g
 
 ## 2. Draft in his voice
 
-- Rules: `POST_RULES` and `_REACTIVE_SLOT_GUIDANCE` in `C:\Claude\Projects\lavkesh\scripts\voice.py`. In short: scroll-stopping first line, short paragraphs with blank lines between them, take a side, one idea, 50 to 140 words, plain text, no links in the body, no hashtags, no emojis, no em dashes, no bullet lists.
-- Name the source and story within the first two lines. He is reacting, not reporting.
+Model the post on his own best posts, not on generic LinkedIn style. Read his last few posts on the activity page first; the Sep 30 "software engineering is alive" post and the Oct 2 kognios post are the reference. The 2026-10-03 DNS post failed this: choppy one-line paragraphs and a pure news recap with no stake of his own.
+
+- First person, fuller paragraphs of three to five sentences, 180 to 300 words. One short punchy line is fine as the close, not as the shape of the whole post.
+- Open with the story and the tension in one or two sentences, explain what actually happened with the concrete details, then say what it means from his own work: his agent escape and guardrail research, kognios, forward deployed delivery in regulated industries. Only tie to things that are true and on record.
+- Take a side. One idea. Plain text, no links in the body, no hashtags, no emojis, no em dashes, no bullet lists.
+- Also apply the banned phrases and rough-edges guidance in `POST_RULES` (`C:\Claude\Projects\lavkesh\scriptsoice.py`), but ignore its 60 to 140 word cap and one-sentence paragraphs.
 - Never fabricate anecdotes, numbers, or events. Only facts on record (resume, LinkedIn, the biography in `voice.py`) or from the source. Frame anything else as a general pattern.
 - No employer or client names, no location names.
 - Run `voice.find_banned_phrases(text)` from the lavkesh repo (must be `[]`) and scan for U+2014.
 
 ## 3. Contextual image
 
-The image comes from the story, so the reader sees what he's reacting to.
+Make an image that explains the story, and switch the style every post so the feed never looks templated. Check the image on his previous post and pick a different style that fits this story's content:
 
-1. First choice: the source page's own preview image (`og:image` / `twitter:image`). Download it to the session scratchpad.
-2. If missing, tiny (under 800px wide), a logo-only tile, or a paywall placeholder: use a relevant openly licensed photo (Wikimedia Commons, Unsplash, or the vendor's press kit) that actually depicts the subject.
-3. Last resort: an editorial typographic card in the Blissful Bytes house style (see `/blissful-article`, cover image section), with a short punchy headline about the story.
+- Whiteboard board (FigJam look: dotted grid, sticky notes, cursors, arrows, a stamp, a comment pin): for mechanisms, architectures, how something broke or got around a control. Reference: `C:\Claude\Projects\scratch\kognios-board.html` and `li-dns-board.html`.
+- Hand-drawn doodle (Caveat / Patrick Hand fonts, sketchy lines): for a personal lesson or a simple before/after. Reference: `kognios-doodle.html`.
+- Terminal or code window: when the story is a command, config, log line, or API change.
+- Chart: when the story is a number or trend. Load the `dataviz` skill first, and plot real figures from the source only.
+- Annotated screenshot of the source (page, product, or paper figure) with arrows and callouts: when the artifact itself is the news.
+- Incident timeline or postmortem card: for outages and security incidents with timestamps.
+- Editorial typographic card (Blissful Bytes house style from `/blissful-article`): only for pure opinion pieces with nothing to diagram. It's the weakest option.
 
-Open the image and look at it before using it. Reject anything with someone else's watermark, a face that isn't central to the story, or text that contradicts the post. Convert to JPEG under 5 MB.
+Rules for every style: the image has to make sense to someone who never reads the post, every number and label on it comes from the source, a bold two-line headline, a small source credit, square 1200x1200. Build it as HTML in `C:\Claude\Projects\scratch\li-<slug>.html` with the local fonts in `scratchonts`, render it with Playwright (`chromium.launch(channel="msedge", headless=True)`), then open the PNG and look at it. Fix overlaps, clipped text, and crowding before using it.
 
 ## 4. Human check
 
