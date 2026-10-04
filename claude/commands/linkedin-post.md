@@ -26,6 +26,7 @@ Model the post on his own best posts, not on generic LinkedIn style. Read his la
 
 - First person, fuller paragraphs of three to five sentences, 180 to 300 words. One short punchy line is fine as the close, not as the shape of the whole post.
 - Open with the story and the tension in one or two sentences, explain what actually happened with the concrete details, then say what it means from his own work: his agent escape and guardrail research, kognios, forward deployed delivery in regulated industries. Only tie to things that are true and on record.
+- Lead with his opinion in the first line, not the news. The news is evidence for the take, compressed to a sentence or two. A post that reads like a recap gets rewritten.
 - Take a side. One idea. Plain text, no links in the body, no emojis, no em dashes, no bullet lists.
 - Also apply the banned phrases and rough-edges guidance in `POST_RULES` (`C:\Claude\Projects\lavkesh\scripts\voice.py`), but ignore its 60 to 140 word cap and one-sentence paragraphs.
 - Never fabricate anecdotes, numbers, or events. Only facts on record (resume, LinkedIn, the biography in `voice.py`) or from the source. Frame anything else as a general pattern.
@@ -38,8 +39,8 @@ Every post has to pull in engineers and also the people who hire and buy: recrui
 
 - Explain the technical core in one plain sentence a non-engineer can follow, then go deep.
 - Name the business stake out loud: risk, cost, audit, downtime, a regulator asking questions. Leaders share posts that give them a line to repeat in their own meeting.
-- Show him as the person who ships and leads this work. Show it through what he built, studied, or decided, never by saying he's open to work or asking for roles.
-- End with a question or claim that both a practitioner and an executive can answer from their own seat.
+- Show him as the person who ships and leads this work. Show it through what he built, studied, or decided, never by saying he's open to work or asking for roles. Never mention recruiters, hiring, job searching, or being open to roles.
+- End on a firm statement both a practitioner and an executive could repeat in their own meeting. Never end with a question.
 - Up to three specific hashtags at the very end (for example #AgenticAI #AISecurity #AIGovernance). Specific ones only, never #Hiring, #OpenToWork, or a pile of generic tags.
 
 ## 3. Contextual image
@@ -54,6 +55,8 @@ Make an image that explains the story, and switch the style every post so the fe
 - Incident timeline or postmortem card: for outages and security incidents with timestamps.
 - Editorial typographic card (Blissful Bytes house style from `/blissful-article`): only for pure opinion pieces with nothing to diagram. It's the weakest option.
 
+Look human-made and bright: paper, ink, marker, whiteboard, a marked-up page. No dark neon, glows, gradients, or stock "AI chip" art; if it could pass for AI-generated, redo it. Reference: `scratch\li-si-dict.html` (a dictionary page edited in red pen).
+
 Rules for every style: the image has to make sense to someone who never reads the post, every number and label on it comes from the source, a bold two-line headline, a small source credit, 4:3 landscape at 1200x900 (rendered at 1.5x). LinkedIn's profile activity carousel shows images in a roughly 4:3 frame and pads anything else with black bars, so 16:9 and square both look awkward there; 4:3 fills it and also shows full size in the feed. Every image carries a small credit line in a corner ("Lavkesh Dwivedi · agentic AI, AI security, regulated industries") so reshares still carry his name. Never draw a fake Follow button: nothing in a LinkedIn image is clickable. Build it as HTML in `C:\Claude\Projects\scratch\li-<slug>.html` with the local fonts in `scratch\fonts`, render it with Playwright (`chromium.launch(channel="msedge", headless=True)`), then open the PNG and look at it. Fix overlaps, clipped text, and crowding before using it.
 
 ## 4. Human check
@@ -67,7 +70,7 @@ Use Claude in Chrome. Don't use the repo's `post_linkedin.py`; the web UI is wha
 1. Open https://www.linkedin.com/feed/, click "Start a post", and confirm the author shows as Lavkesh Dwivedi (not a page).
 2. Image: patch `HTMLInputElement.prototype.click` in the page to capture file inputs without opening the native picker, click the media button from JS, find the input ref, `file_upload` the JPEG, then Next in the editor dialog.
 3. Text: focus the post editor and run `document.execCommand('insertText', false, text)` once. Never type long text with keystrokes. Check the blank lines between paragraphs survived.
-4. Visibility is Anyone. Click Post.
+4. Visibility is Anyone. Get the text and image final before clicking Post: LinkedIn shows "Edited" to every visitor, and Lavkesh won't keep an edited post (fixing one means he deletes it and you repost). Click Post.
 5. Add the first comment: the source link, a blank line, then a follow line with the real follow link, for example:
    "Source, <publisher>'s <report>: <url>
 
