@@ -8,6 +8,7 @@ Write and publish a hand-written Blissful Bytes article on lavkesh.com, then cro
 - Do not name the current employer. Past industries are fine. No specific location names. No em dashes.
 - Title: 45 to 80 characters, no colon, semicolon, parentheses, or em dash, none of the banned title formulas.
 - Write `{"title", "excerpt", "cats", "body_paragraphs"}` to a JSON file in the job tmp directory. Aim for 700 to 1,100 words across 8 to 10 paragraphs.
+- Categories: for any AI-related post dated 2026-09-22 or later, put "SI" right after "AI" in `cats` (the US renamed AI to SI that day). `with_si_label` in generate_article.py does the same for generated posts. Never add SI to older posts.
 
 ## 2. Check before building
 

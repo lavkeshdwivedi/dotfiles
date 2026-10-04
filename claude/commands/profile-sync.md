@@ -10,7 +10,8 @@ Keep Lavkesh's professional profile consistent everywhere it appears: the tailor
 
 ## Current career facts (update this list when they change)
 
-- Headline: Forward Deployed Engineer | Forward Deployed AI Lead | Python, .NET, GCP, Azure & AWS | Regulated Industries
+- Headline: Forward Deployed Engineer | Forward Deployed SI (fka AI) Lead | Python, .NET, GCP, Azure & AWS | Super Intelligence | Regulated Industries (since 2026-10-04; resume header drops Super Intelligence to stay on one line)
+- AI and SI: after the US rename (2026-09-22) every surface carries both terms, as "SI (fka AI)" or AI and SI side by side. Never SI alone, never drop AI (recruiters and ATS search for it). Never "Distinguished Engineer".
 - Charles Schwab, Sr. AI Full Stack Engineer, Sep 2024 to Sep 2026: Azure AND Google Cloud together (Azure OpenAI, Vertex AI with Gemini, GKE with Helm, Harness), code across GitHub and BitBucket, CI/CD on Bamboo, Harness, and GitHub Actions during an org pipeline transition. Never replace one cloud with the other.
 - Microsoft (Contract), AI Solutions Architect, Apr 2024 to Sep 2024: Azure (Azure OpenAI, Semantic Kernel, LangChain, Cosmos DB vector store, Azure AI Search, Document Intelligence, Video Indexer, Service Bus, Entra ID).
 - Philips Healthcare, Jul 2022 to Mar 2024: AWS serverless integrations (Lambda, Step Functions, EventBridge, SQS/SNS, S3 presigned uploads, DynamoDB, CloudWatch, Terraform) plus HL7/DICOM; results 30% throughput, 40% PACS accessibility, 100% DICOM interoperability, 99.8% uptime.
