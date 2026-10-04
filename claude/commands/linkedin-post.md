@@ -45,7 +45,7 @@ Make an image that explains the story, and switch the style every post so the fe
 - Incident timeline or postmortem card: for outages and security incidents with timestamps.
 - Editorial typographic card (Blissful Bytes house style from `/blissful-article`): only for pure opinion pieces with nothing to diagram. It's the weakest option.
 
-Rules for every style: the image has to make sense to someone who never reads the post, every number and label on it comes from the source, a bold two-line headline, a small source credit, 4:3 landscape at 1200x900 (rendered at 1.5x). LinkedIn's profile activity carousel shows images in a roughly 4:3 frame and pads anything else with black bars, so 16:9 and square both look awkward there; 4:3 fills it and also shows full size in the feed. Every image also carries a small LinkedIn-style follow button in a corner (white pill, blue "+ Follow" text, with his name and "agentic AI, AI security, regulated industries" beside it) so people who see a reshare know who to follow. Build it as HTML in `C:\Claude\Projects\scratch\li-<slug>.html` with the local fonts in `scratch\fonts`, render it with Playwright (`chromium.launch(channel="msedge", headless=True)`), then open the PNG and look at it. Fix overlaps, clipped text, and crowding before using it.
+Rules for every style: the image has to make sense to someone who never reads the post, every number and label on it comes from the source, a bold two-line headline, a small source credit, 4:3 landscape at 1200x900 (rendered at 1.5x). LinkedIn's profile activity carousel shows images in a roughly 4:3 frame and pads anything else with black bars, so 16:9 and square both look awkward there; 4:3 fills it and also shows full size in the feed. Every image carries a small credit line in a corner ("Lavkesh Dwivedi · agentic AI, AI security, regulated industries") so reshares still carry his name. Never draw a fake Follow button: nothing in a LinkedIn image is clickable. Build it as HTML in `C:\Claude\Projects\scratch\li-<slug>.html` with the local fonts in `scratch\fonts`, render it with Playwright (`chromium.launch(channel="msedge", headless=True)`), then open the PNG and look at it. Fix overlaps, clipped text, and crowding before using it.
 
 ## 4. Human check
 
@@ -59,7 +59,11 @@ Use Claude in Chrome. Don't use the repo's `post_linkedin.py`; the web UI is wha
 2. Image: patch `HTMLInputElement.prototype.click` in the page to capture file inputs without opening the native picker, click the media button from JS, find the input ref, `file_upload` the JPEG, then Next in the editor dialog.
 3. Text: focus the post editor and run `document.execCommand('insertText', false, text)` once. Never type long text with keystrokes. Check the blank lines between paragraphs survived.
 4. Visibility is Anyone. Click Post.
-5. Add the source URL as the first comment on the post, with one short line of lead-in (for example "Source:" plus the link).
+5. Add the first comment: the source link, a blank line, then a follow line with the real follow link, for example:
+   "Source, <publisher>'s <report>: <url>
+
+   I'll keep breaking down <topic> like this one. Follow along: https://www.linkedin.com/in/lavkesh/?followMember=lavkesh"
+   Links stay out of the post body (they cut reach); the comment is where they go. His profile already has "Make follow primary" on and followers set to Everyone, so the real Follow button shows next to his name for non-connections.
 6. Reload https://www.linkedin.com/in/lavkesh/recent-activity/all/ and confirm the post is there with the image and the comment. Only then report it as posted, with the post link.
 
 If he hasn't authorized posting (a check failed, or he asked for a draft), stop after step 4 and hand him the packet: post text in a plain code block, image path, source link, checklist.
