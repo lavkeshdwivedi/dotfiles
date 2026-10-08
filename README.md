@@ -4,14 +4,20 @@ Personal configuration and Claude Code skills for [@lavkeshdwivedi](https://gith
 
 ## Claude Code skills
 
-Four custom slash commands that install into `~/.claude/commands/` and are available in every Claude Code session.
+Slash commands that install into `~/.claude/commands/` and work in every Claude Code session.
 
 | Command | What it does |
 |---|---|
-| `/autopilot` | Autonomous task execution with minimal prompting |
-| `/deep-research` | Comprehensive academic and industry literature research for a paper or topic in the current conversation |
-| `/journal-reviewer` | Full structured peer review (IEEE TSE standard) of a paper in the current conversation |
-| `/style-fix` | Fixes language, voice, and style -- strips AI-sounding patterns, enforces terse writing |
+| `/autopilot` | Runs the session autonomously with minimal prompting |
+| `/blissful-article` | Writes a Blissful Bytes article for lavkesh.com and publishes it to the LinkedIn newsletter with a cover image |
+| `/deep-research` | Expands a research paper in the conversation with academic literature and documented real-world incidents |
+| `/inbox-replies` | Replies to recruiters and DMs without repeating or contradicting what I already did, with the checks that run before anything is sent |
+| `/journal-reviewer` | Full structured peer review of a paper in the conversation, at the standard of venues like IEEE TSE |
+| `/keep-awake` | Keeps Windows from sleeping or locking; pass `stop` to turn it off |
+| `/linkedin-post` | Finds the day's story in my areas, writes a LinkedIn post in my voice with a contextual 4:3 image, reviews it, and posts at a human pace |
+| `/linkedin-comments` | Writes and posts feed comments and replies in my voice, spaced out and shown to me first |
+| `/profile-sync` | Keeps my resume, LinkedIn, site, GitHub and GitLab profiles, and job boards consistent |
+| `/style-fix` | Fixes language and voice: strips AI-sounding patterns and enforces terse writing |
 
 ## Install
 
@@ -42,7 +48,7 @@ Both scripts copy all skills to `~/.claude/commands/` (or `%USERPROFILE%\.claude
 | [kogniOS](https://github.com/lavkeshdwivedi/kogniOS) | Personal AI operating system |
 | [geo-pulse](https://github.com/lavkeshdwivedi/geo-pulse) | Automatic geopolitics newsletter with hourly summaries to GitHub Pages |
 | [agent-escalation-eval](https://github.com/lavkeshdwivedi/agent-escalation-eval) | Inspect AI eval for autonomous agent constraint escalation (C4) |
-| [agent-escape-lab](https://github.com/lavkeshdwivedi/agent-escape-lab) | Guardrail bypass experiment lab accompanying arXiv preprint on network evasion and tool chain exploitation |
+| [agent-escape-lab](https://github.com/lavkeshdwivedi/agent-escape-lab) | Guardrail bypass experiment lab: four bypass classes tested across 29 models from 8 providers |
 | [openclaw](https://github.com/lavkeshdwivedi/openclaw) | Personal AI assistant, cross-platform |
 | [career-ops-fork](https://github.com/lavkeshdwivedi/career-ops-fork) | AI-powered job search system built on Claude Code: 14 skill modes, Go dashboard, PDF generation, batch processing |
 | [planning-poker](https://github.com/lavkeshdwivedi/planning-poker) | Real-time Planning Poker for agile teams; single HTML file, Firebase backend, no build step |
