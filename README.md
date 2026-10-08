@@ -11,6 +11,7 @@ Slash commands that install into `~/.claude/commands/` and work in every Claude 
 | `/autopilot` | Runs the session autonomously with minimal prompting |
 | `/blissful-article` | Writes a Blissful Bytes article for lavkesh.com and publishes it to the LinkedIn newsletter with a cover image |
 | `/deep-research` | Expands a research paper in the conversation with academic literature and documented real-world incidents |
+| `/human-check` | Reviews anything going out in my name (posts, comments, articles, emails, recruiter replies) the way a careful colleague would, before it reaches me for approval |
 | `/inbox-replies` | Replies to recruiters and DMs without repeating or contradicting what I already did, with the checks that run before anything is sent |
 | `/journal-reviewer` | Full structured peer review of a paper in the conversation, at the standard of venues like IEEE TSE |
 | `/keep-awake` | Keeps Windows from sleeping or locking; pass `stop` to turn it off |
