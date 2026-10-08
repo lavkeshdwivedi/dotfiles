@@ -9,6 +9,19 @@ Keep Lavkesh's professional profile consistent everywhere it appears: the tailor
 - **GitHub and GitLab:** repo `C:\Claude\Projects\profile-readme` has two remotes, `origin` (GitHub) and `gitlab`. One README change covers both. Account bios: GitHub via `gh api -X PATCH user -f bio=...`; GitLab bio, job title, and organization only through gitlab.com/-/user_settings/profile (the API `PUT /user` returns 404 for non-admins).
 - **Job boards:** Indeed (profile.indeed.com: uploaded resume, structured Indeed Resume, Preferences), Dice (dice.com/profile: Profile, Skills, Work History, Preferences), Monster (monster.com/profile/detail). Each carries the current tailored resume plus a structured copy of summary and work history that must match it.
 
+## Surfaces to sync (walk every one, every time)
+
+A change on any one surface means checking all of them. Audit read-only first, change only what drifted, then report each surface as in sync, changed, or needs the user.
+
+1. **Resume:** the long `Lavkesh_Dwivedi_Resume_FDE` docx plus its PDF export in Downloads is the default, and the `_Short` pair is kept for when someone asks. Check both. Summary ends with the C2C line; employment only.
+2. **LinkedIn:** headline, About (no client names, ends with the C2C line), Experience titles/dates/skills, Open to work (Recruiters only, Remote + Hybrid + On-site, Contract, open to relocation). Read About through `/in/lavkesh/edit/forms/summary/new/` and Experience through `/in/lavkesh/details/experience/`; leave without saving.
+3. **lavkesh.com:** `index.html` title, meta/OG/Twitter descriptions, JSON-LD `jobTitle`, About bio; `scripts/voice.py` persona. Check `origin/main`, not a stale local branch.
+4. **GitHub:** profile README (lavkeshdwivedi/lavkeshdwivedi, read the published copy with `gh api -H "Accept: application/vnd.github.raw" repos/lavkeshdwivedi/lavkeshdwivedi/readme`) and account bio (`gh api user --jq .bio`). The local `C:\Claude\Projects\profile-readme` checkout can be stale; pull before editing.
+5. **GitLab:** the same README via the `gitlab` remote (check it renders on gitlab.com/lavkeshdwivedi), plus bio, job title (Forward Deployed Engineer), organization (blank) at gitlab.com/-/user_settings/profile. Bio must match the GitHub bio.
+6. **Indeed:** uploaded resume, structured Indeed Resume (summary, work history, skills), Preferences.
+7. **Dice:** uploaded resume (PDF, 2 MB cap), Profile (work authorization "Prefer not to answer"), Skills, Work History (Schwab title is Sr. AI Full Stack Engineer, not the headline), Preferences (Contract - Corp-to-Corp only, hourly rate $95, one short preferred title with .NET and Python, open to relocation). You may need to ask the user to log in first.
+8. **Monster:** default resume (only one), headline, summary, work experience, skills, work authorization (empty), relocation (Yes), and the three preferred job titles in Settings (Forward Deployed Engineer, Solutions Architect, .NET Python AI Engineer).
+
 ## Current career facts (update this list when they change)
 
 - Headline: Forward Deployed Engineer | Forward Deployed AI Lead | Python, .NET, GCP, Azure & AWS | Regulated Industries
