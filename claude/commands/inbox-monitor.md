@@ -11,13 +11,12 @@ A plain Python script, `windows/inbox_monitor.py` in the dotfiles repo, run by W
 
 ## Categories
 
-- `dart`: anything about DART, 22nd Century, Swati or Ashu. Toast says to handle it himself. Never draft or reply.
 - `attention`: a known contact (Vamsi, Ramu, Kanand), a reply or forward in a thread, an interview or calendar invite, a new LinkedIn message, or personal mail the rules could not place.
 - `fit`: a contract or C2C-compatible role in his area (AI, agents, Forward Deployed, architect, .NET, Python, Azure, GCP). This is the only case that may need a smart reply.
 - `skip`: W2 only, permanent or direct hire, citizen only, junior, rate under $70 an hour, or a role outside his area.
 - `ignore`: shipping, banks, shopping, newsletters, LinkedIn job alerts.
 
-Only `attention`, `fit` and `dart` raise a toast. Everything else is logged and stays quiet. A thread reply that mentions W2 without C2C is tagged "asks about W2", because the answer is always the same and should come upfront: C2C only through his employer, no W2 or transfer (see `/inbox-replies`).
+Only `attention` and `fit` raise a toast. Everything else is logged and stays quiet. A thread reply that mentions W2 without C2C is tagged "asks about W2", because the answer is always the same and should come upfront: C2C only through his employer, no W2 or transfer (see `/inbox-replies`).
 
 ## What happens when a toast fires
 
