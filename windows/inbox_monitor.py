@@ -148,6 +148,13 @@ def selftest():
         ok = got == want
         bad += not ok
         print("ok  " if ok else "FAIL", "%-9s got %-9s %-44s (%s)" % (want, got, sub[:44], why))
+    own = [("Lavkesh <d.lavkesh@gmail.com>", "d.lavkesh@gmail.com", True),
+           ("Kavita <kavita@recruiter.com>", "d.lavkesh@gmail.com", False),
+           ("D.Lavkesh@Gmail.com", "d.lavkesh@gmail.com", True)]
+    for snd, acct, want in own:
+        ok = is_own(snd, acct) == want
+        bad += not ok
+        print("ok  " if ok else "FAIL", "own-mail check %-34s expected %s" % (snd, want))
     print("selftest:", "all passed" if not bad else "%d failed" % bad)
     return bad
 
@@ -179,6 +186,11 @@ def body_text(msg):
     return re.sub(r"\s+", " ", plain or htmls)[:6000]
 
 
+def is_own(sender, account):
+    """True for mail from the account itself (sent items, drafts, self-notes)."""
+    return account.lower() in sender.lower()
+
+
 def check_account(account, cfg, state, notes):
     pw = cred_get(account)
     if not pw:
@@ -188,24 +200,32 @@ def check_account(account, cfg, state, notes):
     M = imaplib.IMAP4_SSL("imap.gmail.com", 993)
     try:
         M.login(account, pw)
-        M.select("INBOX", readonly=True)
+        # All Mail also holds mail that a Gmail filter keeps out of the Inbox (labelled and archived).
+        # Trash and Spam are not in All Mail. The UID numbering differs per folder, so state is per folder.
+        typ, _ = M.select('"[Gmail]/All Mail"', readonly=True)
+        key = account + "|all"
+        if typ != "OK":
+            M.select("INBOX", readonly=True)
+            key = account + "|inbox"
         _typ, data = M.uid("search", None, "ALL")
         uids = [int(x) for x in (data[0] or b"").split()]
-        last = state.get(account)
-        if last is None:  # first run: remember where the inbox is, alert on nothing old
-            state[account] = max(uids) if uids else 0
-            notes.append("%s: baselined at UID %d" % (account, state[account]))
+        last = state.get(key)
+        if last is None:  # first run on this folder: remember where it is, alert on nothing old
+            state[key] = max(uids) if uids else 0
+            notes.append("%s: baselined %s at UID %d" % (account, key.split("|")[1], state[key]))
             return []
         for uid in [u for u in uids if u > last][-60:]:
             _t, d = M.uid("fetch", str(uid), "(BODY.PEEK[]<0.24000>)")
             raw = next((x[1] for x in d if isinstance(x, tuple)), b"")
             msg = email.message_from_bytes(raw)
             sender, subject = dec(msg.get("From")), dec(msg.get("Subject"))
+            if is_own(sender, account):  # sent mail and drafts also live in All Mail
+                continue
             cat, why = classify(sender, subject, body_text(msg), dict(msg.items()), cfg)
             found.append({"account": account, "uid": uid, "cat": cat, "why": why,
                           "from": re.sub(r"\s*<.*?>", "", sender)[:40], "subject": subject[:70]})
         if uids:
-            state[account] = max(uids + [last])
+            state[key] = max(uids + [last])
     finally:
         try:
             M.logout()
