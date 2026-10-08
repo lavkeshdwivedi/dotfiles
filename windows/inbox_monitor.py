@@ -32,7 +32,7 @@ LOGDIR = os.path.join(APP, "log")
 DEFAULTS = {
     "accounts": ["d.lavkesh@gmail.com", "iamlavkesh@gmail.com"],
     "known_senders": ["vamsi.pathakoti@cloudtern.com", "ramu@cloudtern.com", "kanandcorp.com"],
-    "dart_markers": [r"\bdart\b", r"22nd\s*century", r"\bswati\b", r"\bashu\b"],
+    "dart_markers": [],  # DART was a one-off he did not join, so no special handling
     "ignore_domains": ["amazon.", "amazonpay.", "robinhood.", "paypal.", "netflix.", "carmax.", "fedex.",
                        "southwest", "labcorp", "bankofamerica.", "hsbc.", "experian.", "groww.", "walmart.",
                        "babbel.", "insurify.", "samsung", "ntta.org", "xe.com", "fetchpackage.",
@@ -133,7 +133,7 @@ def selftest():
         ("a@x.com", "Data Center Technician", "Contract role, hiring a technician", "skip"),
         ("v@cloudtern.com", "RTR", "hello", "attention"),
         ("a@kanandcorp.com", "Lavkesh Dwivedi Interview", "Teams meeting", "attention"),
-        ("x@22ndcentury.com", "DART update", "swati", "dart"),
+        ("x@22ndcentury.com", "DART update", "swati", "attention"),
         ("shipment-tracking@amazon.in", "Shipped", "your order", "ignore"),
         ("messaging-digest-noreply@linkedin.com", "New message from Kavita", "Platform engineer contract, C2C ok", "attention"),
         ("jobalerts-noreply@linkedin.com", "Principal Engineer AI at BMO", "jobs", "ignore"),
@@ -210,6 +210,12 @@ def check_account(account, cfg, state, notes):
         _typ, data = M.uid("search", None, "ALL")
         uids = [int(x) for x in (data[0] or b"").split()]
         last = state.get(key)
+        if last is None and any(k.startswith(account + "|") for k in state):
+            # Switching folders must not drop mail that arrived since the last scan, so look back one day.
+            since = (dt.date.today() - dt.timedelta(days=1)).strftime("%d-%b-%Y")
+            _typ, d2 = M.uid("search", None, "SINCE", since)
+            recent = [int(x) for x in (d2[0] or b"").split()]
+            last = (min(recent) - 1) if recent else (max(uids) if uids else 0)
         if last is None:  # first run on this folder: remember where it is, alert on nothing old
             state[key] = max(uids) if uids else 0
             notes.append("%s: baselined %s at UID %d" % (account, key.split("|")[1], state[key]))
