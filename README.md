@@ -11,9 +11,11 @@ Slash commands that install into `~/.claude/commands/` and work in every Claude 
 | `/autopilot` | Runs the session autonomously with minimal prompting |
 | `/blissful-article` | Writes a Blissful Bytes article for lavkesh.com and publishes it to the LinkedIn newsletter with a cover image |
 | `/deep-research` | Expands a research paper in the conversation with academic literature and documented real-world incidents |
+| `/inbox-replies` | Replies to recruiters and DMs without repeating or contradicting what I already did, with the checks that run before anything is sent |
 | `/journal-reviewer` | Full structured peer review of a paper in the conversation, at the standard of venues like IEEE TSE |
 | `/keep-awake` | Keeps Windows from sleeping or locking; pass `stop` to turn it off |
 | `/linkedin-post` | Finds the day's story in my areas, writes a LinkedIn post in my voice with a contextual 4:3 image, reviews it, and posts at a human pace |
+| `/linkedin-comments` | Writes and posts feed comments and replies in my voice, spaced out and shown to me first |
 | `/profile-sync` | Keeps my resume, LinkedIn, site, GitHub and GitLab profiles, and job boards consistent |
 | `/style-fix` | Fixes language and voice: strips AI-sounding patterns and enforces terse writing |
 
