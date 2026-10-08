@@ -3,6 +3,7 @@ Keep Lavkesh's professional profile consistent everywhere it appears: the tailor
 ## Sources of truth
 
 - **Resume base:** `C:\Users\dlavk\Downloads\Resume_Lavkesh_Dwivedi_latest.docx`. Tailored copies are named `<Name>_Resume_<Role>.docx` (for example `Lavkesh_Dwivedi_Resume_FDE.docx`). Never put tech names like GCP or AWS in a filename.
+- **Two resume lengths:** the longer `Lavkesh_Dwivedi_Resume_FDE` (docx and PDF) is the default for job boards, applications and recruiters, because many recruiters prefer the longer version. `Lavkesh_Dwivedi_Resume_FDE_Short` (docx and PDF, trimmed summary, fewer bullets, no HackerRank certs) is shared only when someone asks for a shorter one. Never replace the long one with the short one, never upload the short one to a board, and apply any profile change to both.
 - **LinkedIn:** linkedin.com/in/lavkesh (headline, About, Experience, top skills).
 - **Site:** repo `C:\Claude\Projects\lavkesh` (lavkeshdwivedi/lavkesh). Profile text lives in `index.html` (title, meta/OG/Twitter descriptions, JSON-LD `jobTitle` and description, About bio) and the persona line in `scripts/voice.py`. Articles are never edited for profile changes (timeline rule).
 - **GitHub and GitLab:** repo `C:\Claude\Projects\profile-readme` has two remotes, `origin` (GitHub) and `gitlab`. One README change covers both. Account bios: GitHub via `gh api -X PATCH user -f bio=...`; GitLab bio, job title, and organization only through gitlab.com/-/user_settings/profile (the API `PUT /user` returns 404 for non-admins).
