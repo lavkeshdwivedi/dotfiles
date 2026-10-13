@@ -30,7 +30,7 @@ CONFIG = os.path.join(APP, "config.json")
 LOGDIR = os.path.join(APP, "log")
 
 DEFAULTS = {
-    "accounts": ["d.lavkesh@gmail.com", "iamlavkesh@gmail.com"],
+    "accounts": ["d.lavkesh@gmail.com"],
     "known_senders": ["vamsi.pathakoti@cloudtern.com", "ramu@cloudtern.com", "kanandcorp.com"],
     "dart_markers": [],  # DART was a one-off he did not join, so no special handling
     "ignore_domains": ["amazon.", "amazonpay.", "robinhood.", "paypal.", "netflix.", "carmax.", "fedex.",
