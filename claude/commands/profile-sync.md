@@ -1,76 +1,49 @@
-Keep Lavkesh's professional profile consistent everywhere it appears: the tailored resume, LinkedIn, lavkesh.com, the GitHub profile README, the GitLab profile, and the job boards (Indeed, Dice, Monster). Use this whenever any one of them changes (new role, new cloud, new title, new dates) or when asked to tailor a resume for a posting.
+Keep Lavkesh's profile consistent on every surface (resume, LinkedIn, lavkesh.com, GitHub/GitLab README, Indeed, Dice, Monster). Use when any one changes (role, cloud, title, dates) or when tailoring a resume. Browser steps follow /browser-lean. Audit read-only first, change only what drifted, report each surface as in sync, changed, or needs the user.
 
 ## Sources of truth
 
-- **Resume base:** `C:\Users\dlavk\Downloads\Resume_Lavkesh_Dwivedi_latest.docx`. Tailored copies are named `<Name>_Resume_<Role>.docx` (for example `Lavkesh_Dwivedi_Resume_FDE.docx`). Never put tech names like GCP or AWS in a filename.
-- **Two resume lengths:** the longer `Lavkesh_Dwivedi_Resume_FDE` (docx and PDF) is the default for job boards, applications and recruiters, because many recruiters prefer the longer version. `Lavkesh_Dwivedi_Resume_FDE_Short` (docx and PDF, trimmed summary, fewer bullets, no HackerRank certs) is shared only when someone asks for a shorter one. Never replace the long one with the short one, never upload the short one to a board, and apply any profile change to both.
-- **LinkedIn:** linkedin.com/in/lavkesh (headline, About, Experience, top skills).
-- **Site:** repo `C:\Claude\Projects\lavkesh` (lavkeshdwivedi/lavkesh). Profile text lives in `index.html` (title, meta/OG/Twitter descriptions, JSON-LD `jobTitle` and description, About bio) and the persona line in `scripts/voice.py`. Articles are never edited for profile changes (timeline rule).
-- **GitHub and GitLab:** repo `C:\Claude\Projects\profile-readme` has two remotes, `origin` (GitHub) and `gitlab`. One README change covers both. Account bios: GitHub via `gh api -X PATCH user -f bio=...`; GitLab bio, job title, and organization only through gitlab.com/-/user_settings/profile (the API `PUT /user` returns 404 for non-admins).
-- **Job boards:** Indeed (profile.indeed.com: uploaded resume, structured Indeed Resume, Preferences), Dice (dice.com/profile: Profile, Skills, Work History, Preferences), Monster (monster.com/profile/detail). Each carries the current tailored resume plus a structured copy of summary and work history that must match it.
+- Resume base: `C:\Users\dlavk\Downloads\Resume_Lavkesh_Dwivedi_latest.docx`. Tailored copies: `<Name>_Resume_<Role>.docx`, no tech names in filenames. The long `Lavkesh_Dwivedi_Resume_FDE` (docx+PDF) is the default for boards and recruiters. `_Short` (docx+PDF, trimmed, no HackerRank certs) only when asked. Never swap or upload the short one to a board. Apply every change to both.
+- LinkedIn: linkedin.com/in/lavkesh. Site: repo `C:\Claude\Projects\lavkesh`, profile text in `index.html` (title, meta/OG/Twitter, JSON-LD `jobTitle`, About) and persona in `scripts/voice.py`; never edit articles (timeline rule); check `origin/main`.
+- GitHub/GitLab: repo `C:\Claude\Projects\profile-readme`, remotes `origin` and `gitlab`; pull first, local can be stale. Read published README with `gh api -H "Accept: application/vnd.github.raw" repos/lavkeshdwivedi/lavkeshdwivedi/readme`; bio via `gh api user --jq .bio` / `-X PATCH user -f bio=...`. GitLab bio, job title (Forward Deployed Engineer), organization (blank) only at gitlab.com/-/user_settings/profile, bio matching GitHub.
+- Boards: Indeed (profile.indeed.com), Dice (dice.com/profile), Monster (monster.com/profile/detail). Each carries the current resume plus a structured summary and work history that must match it. May need the user to log in.
 
-## Surfaces to sync (walk every one, every time)
-
-A change on any one surface means checking all of them. Audit read-only first, change only what drifted, then report each surface as in sync, changed, or needs the user.
-
-1. **Resume:** the long `Lavkesh_Dwivedi_Resume_FDE` docx plus its PDF export in Downloads is the default, and the `_Short` pair is kept for when someone asks. Check both. The summary carries no C2C availability line (it does not belong on a resume); employment only.
-2. **LinkedIn:** headline, About (no client names, no C2C line, plain AI with no SI wording), Experience titles/dates/skills, Open to work (Recruiters only, Remote + Hybrid + On-site, Contract, open to relocation). Read About through `/in/lavkesh/edit/forms/summary/new/` and Experience through `/in/lavkesh/details/experience/`; leave without saving.
-3. **lavkesh.com:** `index.html` title, meta/OG/Twitter descriptions, JSON-LD `jobTitle`, About bio; `scripts/voice.py` persona. Check `origin/main`, not a stale local branch.
-4. **GitHub:** profile README (lavkeshdwivedi/lavkeshdwivedi, read the published copy with `gh api -H "Accept: application/vnd.github.raw" repos/lavkeshdwivedi/lavkeshdwivedi/readme`) and account bio (`gh api user --jq .bio`). The local `C:\Claude\Projects\profile-readme` checkout can be stale; pull before editing.
-5. **GitLab:** the same README via the `gitlab` remote (check it renders on gitlab.com/lavkeshdwivedi), plus bio, job title (Forward Deployed Engineer), organization (blank) at gitlab.com/-/user_settings/profile. Bio must match the GitHub bio.
-6. **Indeed:** uploaded resume, structured Indeed Resume (summary, work history, skills), Preferences.
-7. **Dice:** uploaded resume (PDF, 2 MB cap), Profile (work authorization "Prefer not to answer"), Skills, Work History (Schwab title is Sr. AI Full Stack Engineer, not the headline), Preferences (Contract - Corp-to-Corp only, hourly rate $95, one short preferred title with .NET and Python, open to relocation). You may need to ask the user to log in first.
-8. **Monster:** default resume (only one), headline, summary, work experience, skills, work authorization (empty), relocation (Yes), and the three preferred job titles in Settings (Forward Deployed Engineer, Solutions Architect, .NET Python AI Engineer).
-
-## Current career facts (update this list when they change)
+## Current facts
 
 - Headline: Forward Deployed Engineer | Forward Deployed AI Lead | Python, .NET, GCP, Azure & AWS | Regulated Industries
-- Charles Schwab, Sr. AI Full Stack Engineer, Sep 2024 to Sep 2026: Azure AND Google Cloud together (Azure OpenAI, Vertex AI with Gemini, GKE with Helm, Harness), code across GitHub and BitBucket, CI/CD on Bamboo, Harness, and GitHub Actions during an org pipeline transition. Never replace one cloud with the other.
-- Microsoft (Contract), AI Solutions Architect, Apr 2024 to Sep 2024: Azure (Azure OpenAI, Semantic Kernel, LangChain, Cosmos DB vector store, Azure AI Search, Document Intelligence, Video Indexer, Service Bus, Entra ID).
-- Philips Healthcare, Jul 2022 to Mar 2024: AWS serverless integrations (Lambda, Step Functions, EventBridge, SQS/SNS, S3 presigned uploads, DynamoDB, CloudWatch, Terraform) plus HL7/DICOM; results 30% throughput, 40% PACS accessibility, 100% DICOM interoperability, 99.8% uptime.
-- AINS starts Jul 2011 (CA Technologies internship Feb to Jun 2011).
-- Engagement model: contract only, C2C through his employer. Never name the employer or vendor (CloudTern) on LinkedIn, the resume, or profiles; US LinkedIn convention lists end clients only (India is the exception). The C2C availability line ("Available for remote or hybrid contract roles on C2C through my employer.") was removed from the resume, board summaries and LinkedIn About on 2026-10-08, so do not add it back. LinkedIn job preferences: Remote + Hybrid, United States + Dallas-Fort Worth, Contract only, Recruiters only; LinkedIn's title list has no Forward Deployed Engineer, so it maps to Software Engineer. Decline LinkedIn's job-alert prompt unless asked.
-- Do not name CloudTern as current employer anywhere. PolisIQ and Ansera may appear as projects on the site and README, never on the resume.
-- Research: cite SSRN only. The arXiv submissions never published. Do not claim seven attack categories on the resume (C5 to C7 were a local pilot).
+- Schwab, Sr. AI Full Stack Engineer, Sep 2024 to Sep 2026: Azure AND Google Cloud together (Azure OpenAI, Vertex AI with Gemini, GKE with Helm, Harness), GitHub and BitBucket, CI/CD on Bamboo, Harness, GitHub Actions. Never replace one cloud with the other.
+- Microsoft (Contract), AI Solutions Architect, Apr 2024 to Sep 2024: Azure OpenAI, Semantic Kernel, LangChain, Cosmos DB vector store, Azure AI Search, Document Intelligence, Video Indexer, Service Bus, Entra ID.
+- Philips Healthcare, Jul 2022 to Mar 2024: AWS serverless (Lambda, Step Functions, EventBridge, SQS/SNS, S3, DynamoDB, CloudWatch, Terraform), HL7/DICOM; 30% throughput, 40% PACS accessibility, 100% DICOM interoperability, 99.8% uptime.
+- AINS from Jul 2011 (CA Technologies internship Feb to Jun 2011).
+- Contract only, C2C through his employer. Never name the employer/vendor (CloudTern, Accionlabs, Cognizant) anywhere. The C2C availability line was removed from resume, boards and LinkedIn About on 2026-10-08, do not re-add. PolisIQ and Ansera only on site/README, never the resume.
+- Research: cite SSRN only; arXiv never published; do not claim seven attack categories (C5 to C7 were a local pilot).
 
 ## Rules
 
-- Resume is employment only. No personal projects, open source, or research sections or summary mentions; those live on the site and README.
-- No em dashes anywhere. No location names in site or post content. Human voice, no AI phrasing.
-- Before any destructive file action, inspect the target and use the Recycle Bin, not permanent delete.
-- When the user has edited a file themselves, edit it in place. Never regenerate it from a script over their changes.
+- Resume is employment only: no personal projects, open source or research. No em dashes, no location names, human voice, plain AI (no SI wording).
+- Recycle Bin, not permanent delete. If the user edited a file, edit in place, never regenerate over it.
+- Site/README: git worktree, one squashed commit, author `Lavkesh Dwivedi <iamlavkesh@gmail.com>`, no Co-Authored-By, open a PR, merge only when asked, JSON-LD must parse, preserve line endings (`newline=''`).
 
 ## Resume checklist
 
-1. Edit the docx in place with python-docx at the run level so formatting survives. Clone existing paragraphs to add bullets.
-2. Tech timeline check: every tool named under a role must have existed, under that name, during that role's dates (examples: Azure AI Services not Cognitive Services after Jul 2023; VSTS not Azure DevOps before Sep 2018; Entra ID from Jul 2023; .NET 8 from Nov 2023).
-3. ATS check: no tables, text boxes, images, or header/footer text; standard section headings; headline keywords match the target role; each role opens with its strongest outcome; every number used also appears on LinkedIn.
-4. Render through Word COM to PDF, confirm page count and that no skills row wraps, and look at the pages.
+1. Edit docx in place with python-docx at run level; clone paragraphs for new bullets.
+2. Tech timeline: every tool must exist under that name in that role's dates (Azure AI Services after Jul 2023; VSTS before Sep 2018; Entra ID from Jul 2023; .NET 8 from Nov 2023).
+3. ATS: no tables, text boxes, images, header/footer text; standard headings; strongest outcome first; every number also on LinkedIn.
+4. Render to PDF via Word COM; confirm page count, no wrapped skills row.
 
-## LinkedIn checklist (Claude in Chrome)
+## LinkedIn (Chrome)
 
-- Turn "Notify network" off in every edit dialog before saving.
-- Adding a position can silently overwrite the headline with "<title> at <company>". Re-check the headline after adding any role and restore it.
-- Role descriptions max 2,000 characters; About max 2,600. Count before typing.
-- The description and About fields are contenteditable. For a targeted change select the exact text range with JavaScript and use `document.execCommand('insertText', ...)`; plain typing after a JS selection can append instead of replace. Verify by reading the field back after reload.
-- Keep 4 to 6 skills per role. The profile is at the 100 skill cap, so only existing skills can be attached. Keep the 5 About top-skill slots filled (currently Agentic AI Development, Enterprise Architecture, Technical Leadership, GCP, Microsoft Azure).
-- LinkedIn About names no clients or employers at all: "a major US brokerage", "a large enterprise software company", "a global healthcare technology company", "CRM platforms" (no Dynamics 365). Client names stay in Experience and on the resume, where recruiters filter by past company.
-- After any scripted `execCommand` edit in a LinkedIn editor, press a real key in the field (End, space, Backspace) and check the character counter changed before saving; otherwise the save can silently drop the edit. Always reload and re-read after saving.
-- Respect fields the user cleared on purpose (employment type and location are unset on client roles).
+- Prefs: Open to work Recruiters only, Remote+Hybrid+On-site, Contract, relocation, US + DFW; no Forward Deployed Engineer in title list, use Software Engineer. Decline job-alert prompts.
+- About names no clients or employers ("a major US brokerage", "a large enterprise software company", "a global healthcare technology company", "CRM platforms"); no C2C line. Client names stay in Experience. Read About at `/in/lavkesh/edit/forms/summary/new/`, Experience at `/in/lavkesh/details/experience/`, leave without saving.
+- Turn "Notify network" off before saving. Adding a position can overwrite the headline, recheck. Limits: role 2,000 chars, About 2,600. Skills at the 100 cap, 4 to 6 per role, five About top skills (Agentic AI Development, Enterprise Architecture, Technical Leadership, GCP, Microsoft Azure). Leave fields the user cleared (employment type, location on client roles).
+- Edits: description and About are contenteditable. Select the range in JS and `execCommand('insertText')`, then press a real key and confirm the counter changed, or the save drops it. Reload and re-read after saving.
 
-## Job boards checklist (Claude in Chrome)
+## Boards (Chrome)
 
-- Upload the latest long resume and remove or replace the old one, so only one resume is listed. Chrome `file_upload` refuses Downloads, so copy the file into `C:\Claude\Projects\scratch\upload` first. Dice has File options, Replace, then Upload only, and it works. Monster accepts the upload but did not replace or add the file (same name or a new name), so the user uploads it by hand there; Monster's card menu only offers Download. Indeed's page often freezes screenshots, so check it by hand if the menu will not open. Chrome `file_upload` only accepts files in this session's job tmp folder (or a folder added with /add-dir), so copy the file there first. To avoid the native file picker, patch `HTMLInputElement.prototype.click` and `showPicker` for file inputs before clicking an upload or replace button, then use `file_upload` on the input.
-- Structured profile must match the resume: summary (same text as the resume), headline or title (Forward Deployed Engineer), every role with title, client, dates, and resume bullets. No CloudTern, and no vendor names (Accionlabs, Cognizant) in titles or companies.
-- Preferences: contract only (Dice: Contract - Corp-to-Corp only; never W2, contract-to-hire, or full-time), Remote + Hybrid + On-site, open to relocation (from 2026-10-06), Forward Deployed Engineer as a job title.
-- No visa hook: never show H1 or visa status, so recruiters do not pitch W2 or visa transfers. Dice work authorization = "Prefer not to answer"; Monster work authorization list left empty; Indeed has no such field.
-- Dice: 2 MB upload cap (use the PDF export). "Scan and upload" adds junk skill chips (Typing, Drafting, AWS Secrets Manager); prune them before "Add to profile". Preference chips need real clicks, not JS clicks.
-- Indeed: one skill per add form; skill deletes done by Claude show "removed / Undo" but do not persist, so leave skill removal to the user. Remote preference has no remote+hybrid option; keep "Open to all jobs".
-- Monster: no Contract job type (use Remote for remote roles). Text fields and the description accept a native value setter plus input/change events; month/year/city/state comboboxes need real typing plus Enter or a click on the suggestion, and city suggestions follow the selected state, so set state first. Skill delete buttons are misaligned with their labels; never script skill deletes there. The cookie banner covers the lower left of the viewport; click options outside it.
-- Reload each site after saving and re-read the fields.
+- Keep one resume (latest long). `file_upload` only accepts the job tmp folder or an /add-dir folder, so copy the file there. To avoid the native picker, patch `HTMLInputElement.prototype.click` and `showPicker` before clicking upload. Dice: File options, Replace, Upload works; 2 MB cap (use PDF). Monster upload does not replace; user uploads by hand. Indeed freezes screenshots, check by hand.
+- Structured profile equals resume: same summary, title Forward Deployed Engineer, each role with title, client, dates, bullets.
+- Prefs: contract only (Dice: Contract - Corp-to-Corp, rate $95/hr, one short preferred title with .NET and Python; never W2, C2H, full-time), Remote+Hybrid+On-site, relocation. Schwab title on Dice is Sr. AI Full Stack Engineer.
+- No visa hook: Dice work authorization "Prefer not to answer", Monster empty, Indeed has none.
+- Dice "Scan and upload" adds junk skill chips (Typing, Drafting, AWS Secrets Manager), prune; preference chips need real clicks. Indeed: one skill per form; Claude's skill deletes do not persist, leave to user; keep "Open to all jobs". Monster: no Contract type (use Remote), native value setter plus input/change events for text, comboboxes need real typing (state before city), never script skill deletes, cookie banner covers lower left; three titles: Forward Deployed Engineer, Solutions Architect, .NET Python AI Engineer; relocation Yes.
+- Reload each site after saving and re-read fields.
 
-## Site and README
-
-- Work in a git worktree, one squashed commit per logical change, author `Lavkesh Dwivedi <iamlavkesh@gmail.com>`, no Co-Authored-By line.
-- Open a PR. Merge only when the user asks. JSON-LD must still parse after edits. Preserve each file's line endings (read and write with `newline=''`).
-- Finish by reporting what changed on each surface and what the user must do by hand (for example GitLab profile fields when Chrome is not signed in).
+Finish by reporting what changed per surface and what the user must do by hand.
