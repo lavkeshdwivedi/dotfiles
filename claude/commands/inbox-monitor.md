@@ -1,10 +1,10 @@
-Set up, run and tune the token-free inbox monitor that watches both Gmail inboxes and only uses a model when a reply needs judgment. Use when asked to monitor his inboxes, to check why a toast did or did not fire, or to change what counts as worth his attention.
+Set up, run and tune the token-free inbox monitor that watches the d.lavkesh Gmail inbox and only uses a model when a reply needs judgment. Use when asked to monitor his inboxes, to check why a toast did or did not fire, or to change what counts as worth his attention.
 
 ## What it is
 
 A plain Python script, `windows/inbox_monitor.py` in the dotfiles repo, run by Windows Task Scheduler every 15 minutes. It never calls a model. Monitoring costs no tokens.
 
-- It reads Gmail over IMAP, read-only, for `d.lavkesh@gmail.com` and `iamlavkesh@gmail.com`, and only looks at mail newer than the last one it saw. The first run records where each inbox is and alerts on nothing old.
+- It reads Gmail over IMAP, read-only, for `d.lavkesh@gmail.com` only (iamlavkesh forwards everything there, so it is excluded), and only looks at mail newer than the last one it saw. The first run records where each inbox is and alerts on nothing old.
 - It sorts each new message with fixed rules copied from the `/inbox-replies` skill. The rules live in `classify()` in the script, and `--selftest` checks them offline.
 - It raises one Windows toast when something needs a person, and writes a small log line per message (sender, subject, category, reason, no body) to `%LOCALAPPDATA%\inbox-monitor\log\YYYY-MM-DD.jsonl`.
 - LinkedIn is covered through LinkedIn's own notification emails in Gmail. Never script LinkedIn itself, because that risks the account.
@@ -24,10 +24,9 @@ The model is used only here, and only when he opens a session and asks. Use `/in
 
 ## Setup (he runs these, because they involve his passwords)
 
-1. For each Gmail account, create an app password at myaccount.google.com/apppasswords (2-step verification must be on).
+1. For d.lavkesh, create an app password at myaccount.google.com/apppasswords (2-step verification must be on).
 2. Store each one in Windows Credential Manager, never in a file or in chat. In the Claude Code prompt, type the command with a `!` prefix so the password prompt is his:
    `! python C:\Claude\Projects\dotfiles\windows\inbox_monitor.py --set-password d.lavkesh@gmail.com`
-   `! python C:\Claude\Projects\dotfiles\windows\inbox_monitor.py --set-password iamlavkesh@gmail.com`
 3. Check the rules: `python windows\inbox_monitor.py --selftest`.
 4. Register the timer: `powershell -File C:\Claude\Projects\dotfiles\windows\install-inbox-monitor.ps1` (use `-Minutes 10` to change the interval, `-Remove` to delete it).
 5. Run `python windows\inbox_monitor.py` once. It baselines each inbox. Alerts start with the next new mail.

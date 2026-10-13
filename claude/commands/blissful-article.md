@@ -1,56 +1,32 @@
-Write and publish a hand-written Blissful Bytes article on lavkesh.com, then cross-post it to the Blissful Bytes LinkedIn newsletter. Use when the user gives a topic or angle for a post (the automated weekly generator is for LLM-drafted pieces; this is for articles written in the session).
+Write and publish a hand-written Blissful Bytes article on lavkesh.com, then cross-post to the Blissful Bytes LinkedIn newsletter. Use when he gives a topic or angle (the weekly generator is for LLM-drafted pieces). Browser steps follow /browser-lean.
 
-## 1. Draft in Lavkesh's voice
+## 1. Draft
 
-- Read the rules first: `scripts/voice.py` (`ARTICLE_RULES`, `TITLE_RULES`, `BANNED_PHRASES`) and the Writing Voice and Timeline sections of the repo `CLAUDE.md`.
-- First person, opens on a concrete hook, real opinions, concrete technical detail. No numbered lists posing as prose, no conclusion paragraph, never end on a question to the reader or a moral.
-- Never fabricate anecdotes, numbers, or events. Use only facts on record (resume, LinkedIn, the biography in `voice.py`). Frame anything else as a general pattern, not a story that happened.
-- Do not name the current employer. Past industries are fine. No specific location names. No em dashes.
-- Title: 45 to 80 characters, no colon, semicolon, parentheses, or em dash, none of the banned title formulas.
-- Write `{"title", "excerpt", "cats", "body_paragraphs"}` to a JSON file in the job tmp directory. Aim for 700 to 1,100 words across 8 to 10 paragraphs.
+- Read `scripts/voice.py` (`ARTICLE_RULES`, `TITLE_RULES`, `BANNED_PHRASES`) and the Writing Voice and Timeline sections of the site repo `CLAUDE.md`.
+- First person, concrete hook, real opinions, technical detail. No numbered lists posing as prose, no conclusion paragraph, never end on a question or a moral. No fabricated anecdotes or numbers: only facts on record, anything else framed as a general pattern. No current employer, no location names, no em dashes.
+- Title 45 to 80 chars, no colon, semicolon, parentheses, em dash or banned formula. Write `{"title","excerpt","cats","body_paragraphs"}` JSON to the job tmp dir, 700 to 1,100 words, 8 to 10 paragraphs.
 
-## 2. Check before building
+## 2. Check
 
-From the site repo root:
+From the site repo root: `sys.path.insert(0,"scripts"); sys.argv=["x"]; import voice, generate_article as g`. Need `voice.find_banned_phrases(text) == []`, `voice.check_excerpt(excerpt) is None`, `g._title_looks_aiish(title) is None`, zero em dashes, and a last paragraph not matching the generator's conclusion regex (question ending, "not X but Y", "reminder that", leading "perhaps").
 
-```python
-import sys; sys.path.insert(0, "scripts"); sys.argv = ["x"]
-import voice, generate_article as g
-voice.find_banned_phrases(text)      # must be []
-voice.check_excerpt(excerpt)          # must be None
-g._title_looks_aiish(title)           # must be None
-```
+## 3. Build (git worktree off origin/main)
 
-Also confirm zero em dashes and that the last paragraph does not match the generator's conclusion-ending regex (question mark ending, "not X but Y", "reminder that", leading "perhaps").
+- Slug: short form + `-lavkesh-dwivedi-<YYYY-MM-DD>`, set explicitly (`g.slugify` truncates mid-word).
+- Use a small script file (inline Python gets blocked in worktrees): load JSON, build the article dict (`slug`, `title`, `date` `%b %d, %Y`, `date_iso`, `excerpt`, `cats`, `read_time` at 230 wpm, `body_paragraphs`), write `g.build_article_html(article, len(existing)+1, existing[-1]["slug"])` to `articles/<slug>.html`, append the catalog entry, `g.save_articles(...)`, `g.rebuild_indexes()`. Then `python scripts/generate_sitemap.py`. "pattern not found, skipping" lines are normal.
+- Prev/next links are fixed by `fix_article_nav.py` in Deploy Pages; do not hand-edit older articles. To retitle later, rebuild the page from JSON (keeps the hero SVG in sync), keep the slug.
+- Ship: one commit, author `Lavkesh Dwivedi <iamlavkesh@gmail.com>`, no Co-Authored-By, push branch, open PR, merge only when he asks, check `gh run list` for Deploy Pages.
 
-## 3. Build into the site (in a git worktree off origin/main)
+## 4. LinkedIn newsletter (by hand in Chrome)
 
-- Slug: short form plus `-lavkesh-dwivedi-<YYYY-MM-DD>` (for example `forward-deployed-still-software-engineer-lavkesh-dwivedi-2026-09-30`). Set it explicitly; `g.slugify` truncates long titles mid-word.
-- Write a small script (complex inline Python gets blocked in worktree sessions) that loads the JSON, builds the article dict (`slug`, `title`, `date` as `%b %d, %Y`, `date_iso`, `excerpt`, `cats`, `read_time` at 230 wpm, `body_paragraphs`), writes `g.build_article_html(article, len(existing) + 1, existing[-1]["slug"])` to `articles/<slug>.html`, appends the catalog entry, then `g.save_articles(...)` and `g.rebuild_indexes()`.
-- Run `python scripts/generate_sitemap.py` (feed.xml, sitemap.xml, stats.json). The "pattern not found, skipping" lines from rebuild are normal.
-- Previous/next links are fixed by `fix_article_nav.py` in the Deploy Pages workflow, so do not hand-edit older articles.
-- To change a title later, rebuild the whole page from the JSON with `build_article_html` so the inline hero SVG updates too; keep the slug.
+Never use the repo crosspost scripts (unreliable, no cover, they taskkill every Edge window). Newsletter: https://www.linkedin.com/newsletters/blissful-bytes-7173171984510468097/
 
-## 4. Ship
+Cover: hand-drawn illustration of the post's actual subject (the typographic bar-chart card was rejected), a few handwritten labels using only facts from the article, one accent colour on cream paper, "Blissful Bytes" top left, `lavkesh.com` bottom left. No chart, logos, neon or AI chip art. One inline SVG in HTML: Caveat font, feTurbulence plus feDisplacementMap (scale about 5) on line art, faint paper noise. Render with Playwright `chromium.launch(channel="msedge", headless=True)` at 1280x720, scale 1.5, downscale to a JPEG q82. Inspect the PNG for collisions and wrong-scale numbers, re-render until clean, show him before publishing.
 
-- One commit, author `Lavkesh Dwivedi <iamlavkesh@gmail.com>`, no Co-Authored-By. Push the branch, open a PR, merge when the user asks. Check `gh run list` for the Deploy Pages run.
-
-## 5. LinkedIn newsletter
-
-Do not use the repo's crosspost scripts (`crosspost_linkedin_newsletter.py` and friends). The user considers them unreliable, they post without a cover, and they `taskkill` every Edge window. Publish by hand through Claude in Chrome instead. The newsletter (https://www.linkedin.com/newsletters/blissful-bytes-7173171984510468097/) gets more reach than a feed post, so every edition needs a proper cover.
-
-### Cover image (hand-made, contextual to the post)
-
-- The typographic card with a bar chart was rejected as "really bad". Make the cover a hand-drawn style illustration of the post's actual subject instead, for example the object itself (a server rack with heat rising for a datacenter piece) with a few handwritten labels that use only facts from the article, one accent color on a cream paper background, small "Blissful Bytes" top left and `lavkesh.com` bottom left. No chart, no logos, no dark neon, no AI chip art.
-- Build it as one inline SVG in HTML: Caveat font from Google Fonts for labels, a feTurbulence plus feDisplacementMap filter (scale about 5) on the line art so strokes wobble, and a faint paper noise filter. Render with Playwright `chromium.launch(channel="msedge", headless=True)` at 1280x720, `device_scale_factor=1.5`, downscale to a 1280x720 JPEG at quality ~82.
-- Look at the PNG before using it. Check for text colliding with other elements (labels and arrows overlap easily) and for any number drawn at the wrong scale. Re-render until it is clean, and show it to him before publishing.
-
-### Publish in Chrome
-
-1. Open https://www.linkedin.com/article/new/ and confirm the author selector already shows "Blissful Bytes".
-2. Cover: the file input only exists after "Upload from computer" is clicked, and clicking opens a native picker. First patch `HTMLInputElement.prototype.click` in the page to capture file inputs without opening the dialog, click the button from JS, find the input ref, then `file_upload` the JPEG. Click Next in the cover dialog.
-3. Title: set the Title textarea (`#article-editor-headline__textarea`, not the first textarea on the page, which is the cover caption) with the native value setter plus `input` and `change` events, and check the caption stayed empty. Never type long text with keystrokes: it freezes the editor and interleaves garbage into the title.
-4. Body: select the "Article editor content" contenteditable and run `document.execCommand('insertHTML', false, html)` once, with one `<p>` per paragraph and a final `Also on lavkesh.com: <link>` paragraph.
-5. Wait for autosave, reload the draft URL (`/article/edit/<id>/`), and verify title, paragraph count, no em dashes, and cover present.
-6. Click Next from JS. In the publish dialog, insert a 2 to 3 sentence intro in the user's voice (`execCommand('insertText')` into the dialog's contenteditable), check it posts to "Anyone + Subscribers", then click Publish.
-7. Confirm the edition shows "Published Just now" with the cover at the top of the newsletter page.
+Publish:
+1. https://www.linkedin.com/article/new/, confirm author "Blissful Bytes".
+2. Cover: patch `HTMLInputElement.prototype.click` to capture file inputs, click "Upload from computer" from JS, `file_upload` the JPEG on the input ref, Next.
+3. Title: `#article-editor-headline__textarea` (not the first textarea, that is the caption) via native value setter plus `input` and `change` events; caption stays empty. Never type long text with keystrokes.
+4. Body: `document.execCommand('insertHTML', false, html)` once on the "Article editor content" contenteditable, one `<p>` per paragraph, final paragraph `Also on lavkesh.com: <link>`.
+5. Wait for autosave, reload `/article/edit/<id>/`, verify title, paragraph count, no em dashes, cover.
+6. Next from JS; in the dialog insert a 2 to 3 sentence intro in his voice (`execCommand('insertText')`), audience "Anyone + Subscribers", Publish. Confirm "Published Just now" with the cover on the newsletter page.
