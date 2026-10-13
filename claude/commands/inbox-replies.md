@@ -27,7 +27,7 @@ Reply to recruiters and other inbound messages (Gmail d.lavkesh@gmail.com and Li
 
 ## Gmail
 
-Use search_threads/get_thread. Reply in thread. Read only the thread you need; do not re-fetch threads already classified this session.
+Use search_threads/get_thread. Reply in thread. Search with `newer_than:3d` plus sender or label, not all-time sweeps. Read only the thread you need; do not re-fetch threads already classified this session. Check LinkedIn "Message replied" notification emails in Gmail first and open Chrome only to send.
 
 ## LinkedIn send loop
 
