@@ -30,7 +30,7 @@ Reply to recruiters and other inbound messages (Gmail d.lavkesh@gmail.com and Li
 
 ## Gmail
 
-Use search_threads/get_thread. Reply in thread. Search with `newer_than:3d` plus sender or label, not all-time sweeps. Read only the thread you need; do not re-fetch threads already classified this session. Check LinkedIn "Message replied" notification emails in Gmail first and open Chrome only to send.
+Use search_threads/get_thread. Reply in thread. Search for mail that needs a reply with `newer_than:1d` (never more than `newer_than:3d`) plus sender or label, never 7d, 30d or all-time sweeps (2026-10-16: a Vikas Ranjan lookup used 30d, wrong). The only all-time search is the prior-contact check by name in step 2 of "Before any message". Read only the thread you need; do not re-fetch threads already classified this session. Check LinkedIn "Message replied" notification emails in Gmail first and open Chrome only to send.
 
 ## LinkedIn send loop
 
