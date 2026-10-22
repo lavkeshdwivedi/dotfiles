@@ -21,12 +21,13 @@ From the site repo root: `sys.path.insert(0,"scripts"); sys.argv=["x"]; import v
 
 Never use the repo crosspost scripts (unreliable, no cover, they taskkill every Edge window). Newsletter: https://www.linkedin.com/newsletters/blissful-bytes-7173171984510468097/
 
-Cover: hand-drawn illustration of the post's actual subject (the typographic bar-chart card was rejected), a few handwritten labels using only facts from the article, one accent colour on cream paper, "Blissful Bytes" top left, `lavkesh.com` bottom left. No chart, logos, neon or AI chip art. One inline SVG in HTML: Caveat font, feTurbulence plus feDisplacementMap (scale about 5) on line art, faint paper noise. Render with Playwright `chromium.launch(channel="msedge", headless=True)` at 1280x720, scale 1.5, downscale to a JPEG q82. Inspect the PNG for collisions and wrong-scale numbers, re-render until clean, show him before publishing.
+No cover image on any LinkedIn article (his rule 2026-10-13, repeated 2026-10-15). Skip cover generation and upload entirely.
+
+Format (modelled on https://www.linkedin.com/pulse/how-do-large-language-models-work-university-of-phoenix-ponmc/, his request 2026-10-16): sentence-case title, often a plain question; no subtitle; a short two-paragraph intro that opens on one concrete image or analogy; then `<h3>` section headings (some phrased as questions, later ones short topic labels), one to three short paragraphs each, uneven lengths. Use one bulleted list with a bold label before a colon only where the content is a real list (the article's uses, stages, options), not to chop prose. End on the last section, then the `Also on lavkesh.com` line. Keep the voice rules from step 1; the site version stays plain paragraphs.
 
 Publish:
 1. https://www.linkedin.com/article/new/, confirm author "Blissful Bytes".
-2. Cover: patch `HTMLInputElement.prototype.click` to capture file inputs, click "Upload from computer" from JS, `file_upload` the JPEG on the input ref, Next.
-3. Title: `#article-editor-headline__textarea` (not the first textarea, that is the caption) via native value setter plus `input` and `change` events; caption stays empty. Never type long text with keystrokes.
-4. Body: `document.execCommand('insertHTML', false, html)` once on the "Article editor content" contenteditable, one `<p>` per paragraph, final paragraph `Also on lavkesh.com: <link>`.
-5. Wait for autosave, reload `/article/edit/<id>/`, verify title, paragraph count, no em dashes, cover.
-6. Next from JS; in the dialog insert a 2 to 3 sentence intro in his voice (`execCommand('insertText')`), audience "Anyone + Subscribers", Publish. Confirm "Published Just now" with the cover on the newsletter page.
+2. Title: `#article-editor-headline__textarea` (not the first textarea, that is the caption) via native value setter plus `input` and `change` events; caption stays empty. Never type long text with keystrokes.
+3. Body: `document.execCommand('insertHTML', false, html)` once on the "Article editor content" contenteditable, `<h3>` per heading, `<p>` per paragraph, `<ul><li><b>Label:</b> text</li></ul>` for the list, final paragraph `Also on lavkesh.com: <link>`.
+4. Wait for autosave, reload `/article/edit/<id>/`, verify title, headings, paragraph count, no em dashes, no cover.
+5. Next from JS; in the dialog insert a 2 to 3 sentence intro in his voice (`execCommand('insertText')`), audience "Anyone + Subscribers", Publish. Confirm "Published Just now" on the newsletter page.

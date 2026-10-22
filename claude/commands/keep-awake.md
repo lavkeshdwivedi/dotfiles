@@ -8,12 +8,12 @@ Argument: `$ARGUMENTS`
 If the argument is `stop` or `off`, stop any running keep-awake process with PowerShell:
 
 ```powershell
-Get-CimInstance Win32_Process -Filter "CommandLine LIKE '%keep-awake.ps1%'" | ForEach-Object { Stop-Process -Id $_.ProcessId -Force }
+Get-CimInstance Win32_Process -Filter "Name='powershell.exe'" | Where-Object { $_.ProcessId -ne $PID -and $_.CommandLine -match '-File.*keep-awake\.ps1' } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force }
 ```
 
 Then reply "Keep awake off." and nothing else.
 
-Otherwise, first check whether it's already running (same CIM query). If it is, reply "Keep awake is already on." Otherwise start it detached with PowerShell:
+Otherwise, first check whether it's already running with the same query minus the Stop-Process (it must exclude its own `$PID` and only match `-File ... keep-awake.ps1`, because a plain `CommandLine LIKE '%keep-awake.ps1%'` matches the checking process itself and falsely reports "already on", which let the screen turn off on 2026-10-19). If a process is returned, reply "Keep awake is already on." Otherwise start it detached with PowerShell:
 
 ```powershell
 Start-Process powershell.exe -WindowStyle Hidden -ArgumentList '-NoProfile','-ExecutionPolicy','Bypass','-File',"$env:USERPROFILE\.claude\scripts\keep-awake.ps1"
